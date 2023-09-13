@@ -3,7 +3,7 @@ import { MusicalNoteIcon } from "@heroicons/react/24/outline";
 const Header = () => {
   return (
     <section className="header-bg-image">
-      <section className="container mx-auto p-4">
+      <section className="container mx-auto">
         {/* nav */}
         <nav className="flex items-center gap-2 text-white">
           <MusicalNoteIcon className="h-6 w-6" />
