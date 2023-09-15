@@ -2,6 +2,11 @@ import { useState } from "react";
 import { XMarkIcon } from "@heroicons/react/24/outline";
 import { ChevronDownIcon } from "@heroicons/react/24/outline";
 
+interface IDropdown {
+  title: string;
+  isOpen: boolean;
+}
+
 const FilterSection = () => {
   const [activeTags, setActiveTags] = useState<string[]>([]);
   const [genres, setGenres] = useState([
@@ -23,12 +28,12 @@ const FilterSection = () => {
     "2010s",
     "2020s",
   ]);
-  const [toggleDropdowns, setToggleDropdowns] = useState([
+  const [toggleDropdowns, setToggleDropdowns] = useState<IDropdown[]>([
     { title: "genre", isOpen: false },
     { title: "decade", isOpen: false },
   ]);
   const [toggleGenres, setToggleGenres] = useState(false);
-  const [toggleDecade, setToggleDecade] = useState(false);
+  const [toggleDecades, setToggleDecades] = useState(false);
 
   const addToActiveTags = (genre: string) => {
     // if tag is not already chosen
@@ -41,9 +46,22 @@ const FilterSection = () => {
     setActiveTags((state) => state.filter((item) => item !== genre));
   };
 
-  const handleFilterDropdowns = () => {
+  const handleFilterDropdowns = (filter: string) => {
     // close other dropdowns when one filter is clicked
-    setToggleGenres(!toggleGenres);
+    // todo: make this function cleaner
+    if (filter === "genre" && toggleGenres) {
+      return setToggleGenres(!toggleGenres);
+    }
+    if (filter === "decade" && toggleDecades) {
+      return setToggleDecades(!toggleDecades);
+    }
+    if (filter === "genre") {
+      setToggleGenres(true);
+      setToggleDecades(false);
+    } else {
+      setToggleDecades(true);
+      setToggleGenres(false);
+    }
   };
 
   return (
@@ -77,7 +95,7 @@ const FilterSection = () => {
           <h2 className="mb-4 text-lg text-white">Filters</h2>
           <div className="space-y-1">
             <button
-              onClick={() => setToggleGenres(!toggleGenres)}
+              onClick={() => handleFilterDropdowns("genre")}
               className="flex w-full items-center justify-between"
             >
               <p className="font-semibold">Genres</p>
@@ -99,17 +117,17 @@ const FilterSection = () => {
               </ul>
             )}
             <button
-              onClick={() => setToggleDecade(!toggleDecade)}
+              onClick={() => handleFilterDropdowns("decade")}
               className="flex w-full items-center justify-between"
             >
               <p className="font-semibold">Decade</p>
               <ChevronDownIcon
                 className={`h-5 w-5 transition-all ${
-                  toggleDecade && "rotate-180"
+                  toggleDecades && "rotate-180"
                 }`}
               />
             </button>
-            {toggleDecade && (
+            {toggleDecades && (
               <ul>
                 {decade.map((time) => (
                   <li key={time}>
