@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { XMarkIcon } from "@heroicons/react/24/outline";
 import { ChevronDownIcon } from "@heroicons/react/24/outline";
+import { CheckIcon } from "@heroicons/react/24/outline";
 
 interface IDropdown {
   title: string;
@@ -35,15 +36,17 @@ const FilterSection = () => {
   const [toggleGenres, setToggleGenres] = useState(false);
   const [toggleDecades, setToggleDecades] = useState(false);
 
-  const addToActiveTags = (genre: string) => {
-    // if tag is not already chosen
-    if (!activeTags.includes(genre) && activeTags.length < 6) {
-      setActiveTags([...activeTags, genre]);
+  const addToActiveTags = (filter: string) => {
+    if (!activeTags.includes(filter) && activeTags.length < 6) {
+      setActiveTags([...activeTags, filter]);
+    } else {
+      // remove from activeTags if already chosen
+      setActiveTags((state) => state.filter((item) => item !== filter));
     }
   };
 
-  const removeFromActiveTags = (genre: string) => {
-    setActiveTags((state) => state.filter((item) => item !== genre));
+  const removeFromActiveTags = (filter: string) => {
+    setActiveTags((state) => state.filter((item) => item !== filter));
   };
 
   const handleFilterDropdowns = (filter: string) => {
@@ -109,8 +112,22 @@ const FilterSection = () => {
               <ul>
                 {genres.map((genre) => (
                   <li key={genre}>
-                    <button onClick={() => addToActiveTags(genre)}>
-                      {genre}
+                    <button
+                      className="relative"
+                      onClick={() => addToActiveTags(genre)}
+                    >
+                      <p
+                        className={`ps-6 ${
+                          activeTags.includes(genre) && "text-blue-300"
+                        }`}
+                      >
+                        {genre}
+                      </p>
+                      {activeTags.includes(genre) && (
+                        <span className="absolute inset-y-0 left-0 top-0 flex items-center">
+                          <CheckIcon className="h-5 w-5 text-blue-300" />
+                        </span>
+                      )}
                     </button>
                   </li>
                 ))}
@@ -131,8 +148,22 @@ const FilterSection = () => {
               <ul>
                 {decade.map((time) => (
                   <li key={time}>
-                    <button onClick={() => addToActiveTags(time)}>
-                      {time}
+                    <button
+                      className="relative"
+                      onClick={() => addToActiveTags(time)}
+                    >
+                      <p
+                        className={`ps-6 ${
+                          activeTags.includes(time) && "text-blue-300"
+                        }`}
+                      >
+                        {time}
+                      </p>
+                      {activeTags.includes(time) && (
+                        <span className="absolute inset-y-0 left-0 top-0 flex items-center">
+                          <CheckIcon className="h-5 w-5 text-blue-300" />
+                        </span>
+                      )}
                     </button>
                   </li>
                 ))}
