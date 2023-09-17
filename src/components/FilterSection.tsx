@@ -95,7 +95,15 @@ const FilterSection = () => {
         </div>
         {/* choose filters */}
         <section className="w-full max-w-sm bg-zinc-800 p-4">
-          <h2 className="mb-4 text-lg text-white">Filters</h2>
+          <div className="mb-4 flex items-center justify-between text-white">
+            <h2 className="text-lg">Filters</h2>
+            <button
+              className="hover:underline"
+              onClick={() => setActiveTags([])}
+            >
+              Clear all
+            </button>
+          </div>
           <div className="space-y-1">
             <button
               onClick={() => handleFilterDropdowns("genre")}
