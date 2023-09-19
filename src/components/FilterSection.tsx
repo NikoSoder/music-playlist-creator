@@ -1,12 +1,6 @@
 import { useState } from "react";
-import { XMarkIcon } from "@heroicons/react/24/outline";
-import { ChevronDownIcon } from "@heroicons/react/24/outline";
-import { CheckIcon } from "@heroicons/react/24/outline";
-
-interface IDropdown {
-  title: string;
-  isOpen: boolean;
-}
+import Tags from "./Tags";
+import Filters from "./Filters";
 
 const FilterSection = () => {
   const [activeTags, setActiveTags] = useState<string[]>([]);
@@ -29,10 +23,6 @@ const FilterSection = () => {
     "2010s",
     "2020s",
   ]);
-  const [toggleDropdowns, setToggleDropdowns] = useState<IDropdown[]>([
-    { title: "genre", isOpen: false },
-    { title: "decade", isOpen: false },
-  ]);
   const [toggleGenres, setToggleGenres] = useState(false);
   const [toggleDecades, setToggleDecades] = useState(false);
 
@@ -52,13 +42,13 @@ const FilterSection = () => {
   const handleFilterDropdowns = (filter: string) => {
     // close other dropdowns when one filter is clicked
     // todo: make this function cleaner
-    if (filter === "genre" && toggleGenres) {
+    if (filter === "Genre" && toggleGenres) {
       return setToggleGenres(!toggleGenres);
     }
-    if (filter === "decade" && toggleDecades) {
+    if (filter === "Decade" && toggleDecades) {
       return setToggleDecades(!toggleDecades);
     }
-    if (filter === "genre") {
+    if (filter === "Genre") {
       setToggleGenres(true);
       setToggleDecades(false);
     } else {
@@ -71,28 +61,10 @@ const FilterSection = () => {
     <section className="container mx-auto">
       <section className="flex justify-around">
         {/* active tags */}
-        <div className="w-full max-w-sm">
-          <ul className="flex w-full flex-wrap gap-2 bg-zinc-800 p-4">
-            {activeTags.length ? (
-              activeTags.map((tag) => (
-                <li
-                  className="flex items-center justify-center gap-2 rounded bg-zinc-900 px-3 py-2"
-                  key={Math.random()}
-                >
-                  <p>{tag}</p>
-                  <button
-                    className="rounded-full bg-zinc-700 p-1"
-                    onClick={() => removeFromActiveTags(tag)}
-                  >
-                    <XMarkIcon className="h-4 w-4" />
-                  </button>
-                </li>
-              ))
-            ) : (
-              <li>No tags selected</li>
-            )}
-          </ul>
-        </div>
+        <Tags
+          activeTags={activeTags}
+          handleRemoveFromActiveTags={removeFromActiveTags}
+        />
         {/* choose filters */}
         <section className="w-full max-w-sm bg-zinc-800 p-4">
           <div className="mb-4 flex items-center justify-between text-white">
@@ -105,78 +77,22 @@ const FilterSection = () => {
             </button>
           </div>
           <div className="space-y-1">
-            <button
-              onClick={() => handleFilterDropdowns("genre")}
-              className="flex w-full items-center justify-between"
-            >
-              <p className="font-semibold">Genres</p>
-              <ChevronDownIcon
-                className={`h-5 w-5 transition-all ${
-                  toggleGenres && "rotate-180"
-                }`}
-              />
-            </button>
-            {toggleGenres && (
-              <ul>
-                {genres.map((genre) => (
-                  <li key={genre}>
-                    <button
-                      className="relative"
-                      onClick={() => addToActiveTags(genre)}
-                    >
-                      <p
-                        className={`ps-6 ${
-                          activeTags.includes(genre) && "text-blue-300"
-                        }`}
-                      >
-                        {genre}
-                      </p>
-                      {activeTags.includes(genre) && (
-                        <span className="absolute inset-y-0 left-0 top-0 flex items-center">
-                          <CheckIcon className="h-5 w-5 text-blue-300" />
-                        </span>
-                      )}
-                    </button>
-                  </li>
-                ))}
-              </ul>
-            )}
-            <button
-              onClick={() => handleFilterDropdowns("decade")}
-              className="flex w-full items-center justify-between"
-            >
-              <p className="font-semibold">Decade</p>
-              <ChevronDownIcon
-                className={`h-5 w-5 transition-all ${
-                  toggleDecades && "rotate-180"
-                }`}
-              />
-            </button>
-            {toggleDecades && (
-              <ul>
-                {decade.map((time) => (
-                  <li key={time}>
-                    <button
-                      className="relative"
-                      onClick={() => addToActiveTags(time)}
-                    >
-                      <p
-                        className={`ps-6 ${
-                          activeTags.includes(time) && "text-blue-300"
-                        }`}
-                      >
-                        {time}
-                      </p>
-                      {activeTags.includes(time) && (
-                        <span className="absolute inset-y-0 left-0 top-0 flex items-center">
-                          <CheckIcon className="h-5 w-5 text-blue-300" />
-                        </span>
-                      )}
-                    </button>
-                  </li>
-                ))}
-              </ul>
-            )}
+            <Filters
+              title="Genre"
+              activeTags={activeTags}
+              handleFilterDropdowns={handleFilterDropdowns}
+              handleAddToActiveTags={addToActiveTags}
+              filterArray={genres}
+              isToggleActive={toggleGenres}
+            />
+            <Filters
+              title="Decade"
+              activeTags={activeTags}
+              handleFilterDropdowns={handleFilterDropdowns}
+              handleAddToActiveTags={addToActiveTags}
+              filterArray={decade}
+              isToggleActive={toggleDecades}
+            />
           </div>
         </section>
       </section>
