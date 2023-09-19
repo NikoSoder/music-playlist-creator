@@ -8,19 +8,18 @@ interface ChildPropsTags {
 const Tags = ({ activeTags, handleRemoveFromActiveTags }: ChildPropsTags) => {
   return (
     <div className="w-full max-w-sm">
-      <ul className="flex w-full flex-wrap gap-2 bg-zinc-800 p-4">
+      <ul className="flex w-full flex-wrap gap-2 rounded-md border border-sky-400 bg-zinc-800 p-6 shadow-blue">
         {activeTags.length ? (
           activeTags.map((tag) => (
-            <li
-              className="flex items-center justify-center gap-2 rounded bg-zinc-900 px-3 py-2"
-              key={Math.random()}
-            >
-              <p>{tag}</p>
+            <li className="group" key={Math.random()}>
               <button
-                className="rounded-full bg-zinc-700 p-1"
+                className="flex items-center gap-2 rounded bg-zinc-700 px-3 py-2"
                 onClick={() => handleRemoveFromActiveTags(tag)}
               >
-                <XMarkIcon className="h-4 w-4" />
+                {tag}
+                <div className="rounded-full p-1 transition-all group-hover:bg-zinc-500">
+                  <XMarkIcon className="h-4 w-4 group-hover:text-white" />
+                </div>
               </button>
             </li>
           ))

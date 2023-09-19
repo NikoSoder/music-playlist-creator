@@ -39,14 +39,14 @@ const Filters = ({
               >
                 <p
                   className={`ps-6 ${
-                    activeTags.includes(filter) && "text-blue-300"
+                    activeTags.includes(filter) && "text-blue-200"
                   }`}
                 >
                   {filter}
                 </p>
                 {activeTags.includes(filter) && (
                   <span className="absolute inset-y-0 left-0 top-0 flex items-center">
-                    <CheckIcon className="h-5 w-5 text-blue-300" />
+                    <CheckIcon className="h-5 w-5 text-blue-200" />
                   </span>
                 )}
               </button>
