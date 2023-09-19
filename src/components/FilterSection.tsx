@@ -58,15 +58,15 @@ const FilterSection = () => {
   };
 
   return (
-    <section className="container mx-auto">
-      <section className="flex justify-around">
+    <section className="container mx-auto py-10">
+      <section className="flex flex-col items-center justify-center gap-10 md:flex-row md:items-start">
         {/* active tags */}
         <Tags
           activeTags={activeTags}
           handleRemoveFromActiveTags={removeFromActiveTags}
         />
         {/* choose filters */}
-        <section className="w-full max-w-sm bg-zinc-800 p-4">
+        <section className="w-full max-w-sm rounded-md border border-sky-400 bg-zinc-800 p-6 shadow-blue">
           <div className="mb-4 flex items-center justify-between text-white">
             <h2 className="text-lg">Filters</h2>
             <button
