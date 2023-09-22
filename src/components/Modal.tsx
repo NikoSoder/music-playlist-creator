@@ -2,9 +2,16 @@ import { CheckIcon } from "@heroicons/react/24/outline";
 import { fakeArtistData } from "../mockdata/mockArtists";
 import { XMarkIcon } from "@heroicons/react/24/outline";
 
-const Modal = () => {
+interface ChildPropsModal {
+  handleCloseModal: () => void;
+}
+
+const Modal = ({ handleCloseModal }: ChildPropsModal) => {
   return (
-    <section className="fixed left-0 top-0 z-10 flex h-full w-full items-center justify-center bg-zinc-900/80 p-2">
+    <section
+      onClick={handleCloseModal}
+      className="fixed left-0 top-0 z-10 flex h-full w-full items-center justify-center bg-zinc-900/90 p-2"
+    >
       {/* backdrop-blur-sm lagging ^ */}
       <section className="max-w-lg animate-below rounded-md border border-blue-300 bg-slate-800/80 px-10 py-6 shadow-blue">
         {/* modal header */}
@@ -13,7 +20,10 @@ const Modal = () => {
             <CheckIcon className="h-7 w-7 text-blue-300" />
           </div>
           <h2 className="animate-fadeIn text-xl">Playlist created!</h2>
-          <button className="absolute right-0 top-0 animate-fadeIn rounded-md hover:bg-slate-700">
+          <button
+            onClick={handleCloseModal}
+            className="absolute right-0 top-0 animate-fadeIn rounded-md hover:bg-slate-700"
+          >
             <XMarkIcon className="h-6 w-6 text-slate-300 hover:text-white" />
           </button>
         </div>
