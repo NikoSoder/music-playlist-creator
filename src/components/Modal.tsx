@@ -1,5 +1,6 @@
 import { CheckIcon } from "@heroicons/react/24/outline";
 import { fakeArtistData } from "../mockdata/mockArtists";
+import { XMarkIcon } from "@heroicons/react/24/outline";
 
 const Modal = () => {
   return (
@@ -7,11 +8,14 @@ const Modal = () => {
       {/* backdrop-blur-sm lagging ^ */}
       <section className="max-w-lg animate-below rounded-md border border-blue-300 bg-slate-800/80 px-10 py-6 shadow-blue">
         {/* modal header */}
-        <div className="mb-4 flex flex-col items-center justify-center gap-2">
+        <div className="relative mb-4 flex flex-col items-center justify-center gap-2">
           <div className="animate-appear rounded-full border-2 border-blue-300 p-1 shadow-blue">
             <CheckIcon className="h-7 w-7 text-blue-300" />
           </div>
           <h2 className="animate-fadeIn text-xl">Playlist created!</h2>
+          <button className="absolute right-0 top-0 animate-fadeIn rounded-md hover:bg-slate-700">
+            <XMarkIcon className="h-6 w-6 text-slate-300 hover:text-white" />
+          </button>
         </div>
         {/* modal body */}
         <div className="flex animate-fadeIn justify-center">
