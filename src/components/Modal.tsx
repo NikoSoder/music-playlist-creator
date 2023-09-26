@@ -9,11 +9,11 @@ interface ChildPropsModal {
 const Modal = ({ handleCloseModal }: ChildPropsModal) => {
   return (
     <>
+      {/* modal background window */}
       <section
         onClick={handleCloseModal}
-        className="fixed left-0 top-0 flex h-full w-full items-center justify-center bg-zinc-900/90 p-2"
+        className="fixed left-0 top-0 h-full w-full bg-zinc-900/90 p-2"
       ></section>
-      {/* todo: remove useless classes if not needed */}
       {/* close modal when clicking outside of it or don't close */}
       {/* backdrop-blur-sm lagging ^ */}
       <div className="fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
