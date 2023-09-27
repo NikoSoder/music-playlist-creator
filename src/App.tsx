@@ -19,11 +19,10 @@ function App() {
   return (
     <main className="p-4">
       <Header />
-      <FilterSection />
-      {/* modal test button */}
-      <button onClick={createPlaylist} className="bg-zinc-700 text-2xl">
-        Test modal button
-      </button>
+      <FilterSection
+        setIsOpenModal={setIsOpenModal}
+        isOpenModal={isOpenModal}
+      />
       {isOpenModal && <Modal handleCloseModal={closeModal} />}
     </main>
   );

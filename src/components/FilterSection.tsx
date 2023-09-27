@@ -1,8 +1,17 @@
 import { useState } from "react";
 import Tags from "./Tags";
 import Filters from "./Filters";
+import { Dispatch } from "react";
 
-const FilterSection = () => {
+interface ChildPropsFilterSection {
+  isOpenModal: boolean;
+  setIsOpenModal: Dispatch<React.SetStateAction<boolean>>;
+}
+
+const FilterSection = ({
+  isOpenModal,
+  setIsOpenModal,
+}: ChildPropsFilterSection) => {
   const [activeTags, setActiveTags] = useState<string[]>([]);
   const [genres, setGenres] = useState([
     "Genre 1",
@@ -25,6 +34,27 @@ const FilterSection = () => {
   ]);
   const [toggleGenres, setToggleGenres] = useState(false);
   const [toggleDecades, setToggleDecades] = useState(false);
+  const [isPlaylistFetchLoading, setIsPlaylistFecthLoading] = useState(false);
+
+  const createPlaylist = async () => {
+    setIsPlaylistFecthLoading(true);
+    // here goes logic to create playlist
+    // send tags to server == > set some kind of loading to 'create' button
+    // when playlist comes from server, open modal and show playlist to user
+    const result = await mockPromise(activeTags);
+    // pass playlist to modal
+    setIsOpenModal(!isOpenModal);
+    setIsPlaylistFecthLoading(false);
+  };
+
+  // todo: delete function this later
+  function mockPromise(value: string[]): Promise<string[]> {
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        resolve(value);
+      }, 3000);
+    });
+  }
 
   const addToActiveTags = (filter: string) => {
     if (!activeTags.includes(filter) && activeTags.length < 6) {
@@ -58,8 +88,8 @@ const FilterSection = () => {
   };
 
   return (
-    <section className="container mx-auto py-10">
-      <section className="flex flex-col items-center justify-center gap-10 md:flex-row md:items-start">
+    <section className="container mx-auto border-b border-b-zinc-700 py-20">
+      <section className="mb-16 flex flex-col items-center justify-center gap-10 md:flex-row md:items-start">
         {/* active tags */}
         <Tags
           activeTags={activeTags}
