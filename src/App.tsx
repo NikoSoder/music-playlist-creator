@@ -5,12 +5,7 @@ import Modal from "./components/Modal";
 import { useState } from "react";
 
 function App() {
-  const [isOpenModal, setIsOpenModal] = useState(false);
-
-  const createPlaylist = () => {
-    // here goes logic to create playlist
-    setIsOpenModal(!isOpenModal);
-  };
+  const [isOpenModal, setIsOpenModal] = useState(false); // set this to true when playlist is created
 
   const closeModal = () => {
     setIsOpenModal(false);
