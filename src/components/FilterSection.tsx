@@ -38,6 +38,7 @@ const FilterSection = ({
 
   const createPlaylist = async () => {
     setIsPlaylistFecthLoading(true);
+    console.log(activeTags);
     // here goes logic to create playlist
     // send tags to server == > set some kind of loading to 'create' button
     // when playlist comes from server, open modal and show playlist to user
@@ -126,60 +127,24 @@ const FilterSection = ({
           </div>
         </section>
       </section>
-      <div className="flex flex-col justify-center gap-4">
-        {/* create playlist button */}
-        <div className="text-center">
-          <button
-            disabled={isPlaylistFetchLoading}
-            onClick={createPlaylist}
-            className="rounded bg-sky-700 px-10 py-3 text-xl transition-all hover:bg-sky-600 hover:shadow-blue active:bg-sky-700"
-          >
-            {!isPlaylistFetchLoading ? (
-              "Create"
-            ) : (
-              <div className="flex items-center gap-2">
-                <div className="h-6 w-6 animate-spin rounded-full border-4 border-sky-800 border-t-white"></div>
-                <p>Loading...</p>
-              </div>
-            )}
-          </button>
-        </div>
-        {/* create playlist button second styling */}
-        <div className="text-center">
-          <button
-            disabled={isPlaylistFetchLoading}
-            onClick={createPlaylist}
-            className="group relative inline-flex items-center justify-center overflow-hidden rounded-md bg-gradient-to-br from-cyan-500 to-blue-500 p-0.5 text-xl font-medium text-white hover:shadow-blue group-hover:from-cyan-500 group-hover:to-blue-500"
-          >
-            {!isPlaylistFetchLoading ? (
-              <span className="relative rounded bg-gray-900 px-10 py-3 transition-all duration-75 ease-in group-hover:bg-opacity-0">
-                Create
-              </span>
-            ) : (
-              <div className="relative flex items-center gap-2 rounded px-5 py-2.5">
-                <div className="h-6 w-6 animate-spin rounded-full border-4 border-cyan-700 border-t-white"></div>
-                <span>Loading...</span>
-              </div>
-            )}
-          </button>
-        </div>
-        {/* create playlist button third styling */}
-        <div className="text-center">
-          <button
-            disabled={isPlaylistFetchLoading}
-            onClick={createPlaylist}
-            className="rounded bg-gradient-to-r from-cyan-600 to-blue-600 px-10 py-3 text-xl font-medium transition-all hover:shadow-blue"
-          >
-            {!isPlaylistFetchLoading ? (
-              "Create"
-            ) : (
-              <div className="flex items-center gap-2">
-                <div className="h-6 w-6 animate-spin rounded-full border-4 border-sky-800 border-t-white"></div>
-                <p>Loading...</p>
-              </div>
-            )}
-          </button>
-        </div>
+      {/* create playlist button */}
+      <div className="text-center">
+        <button
+          disabled={isPlaylistFetchLoading}
+          onClick={createPlaylist}
+          className="group relative inline-flex items-center justify-center overflow-hidden rounded-md bg-gradient-to-br from-cyan-500 to-blue-500 p-0.5 text-xl font-medium text-white hover:shadow-blue group-hover:from-cyan-500 group-hover:to-blue-500"
+        >
+          {!isPlaylistFetchLoading ? (
+            <span className="relative rounded bg-gray-900 px-10 py-3 transition-all duration-75 ease-in group-hover:bg-opacity-0">
+              Create
+            </span>
+          ) : (
+            <div className="relative flex items-center gap-2 rounded px-5 py-3">
+              <div className="h-6 w-6 animate-spin rounded-full border-4 border-cyan-700 border-t-white"></div>
+              <span>Loading...</span>
+            </div>
+          )}
+        </button>
       </div>
     </section>
   );

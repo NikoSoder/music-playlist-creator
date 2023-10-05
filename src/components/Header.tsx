@@ -11,7 +11,7 @@ const Header = () => {
       {/* hero section */}
       <section className="py-20 text-center">
         <h1 className="mb-2 text-2xl text-white">
-          <span className="text-blue-300">Create</span> your playlist with ease
+          Create your playlist with ease
         </h1>
         <h2 className="text-xl">
           Select your tags to define your musical taste,
