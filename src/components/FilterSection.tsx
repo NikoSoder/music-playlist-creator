@@ -2,6 +2,8 @@ import { useState } from "react";
 import Tags from "./Tags";
 import Filters from "./Filters";
 import { Dispatch } from "react";
+import { genresAndStyles } from "../shared/genres_and_styles";
+import { decades } from "../shared/decades";
 
 interface ChildPropsFilterSection {
   isOpenModal: boolean;
@@ -13,25 +15,6 @@ const FilterSection = ({
   setIsOpenModal,
 }: ChildPropsFilterSection) => {
   const [activeTags, setActiveTags] = useState<string[]>([]);
-  const [genres, setGenres] = useState([
-    "Genre 1",
-    "Genre 2",
-    "Genre 3",
-    "Genre 4",
-    "Genre 54954758475",
-    "Genre 65735",
-    "Genre 70080282028028",
-    "Genre 832",
-    "Genre 9",
-  ]);
-  const [decade, setDecade] = useState([
-    "70s",
-    "80s",
-    "90s",
-    "2000s",
-    "2010s",
-    "2020s",
-  ]);
   const [toggleGenres, setToggleGenres] = useState(false);
   const [toggleDecades, setToggleDecades] = useState(false);
   const [isPlaylistFetchLoading, setIsPlaylistFecthLoading] = useState(false);
@@ -73,13 +56,13 @@ const FilterSection = ({
   const handleFilterDropdowns = (filter: string) => {
     // close other dropdowns when one filter is clicked
     // todo: make this function cleaner
-    if (filter === "Genre" && toggleGenres) {
+    if (filter === "Genre & Style" && toggleGenres) {
       return setToggleGenres(!toggleGenres);
     }
     if (filter === "Decade" && toggleDecades) {
       return setToggleDecades(!toggleDecades);
     }
-    if (filter === "Genre") {
+    if (filter === "Genre & Style") {
       setToggleGenres(true);
       setToggleDecades(false);
     } else {
@@ -109,11 +92,11 @@ const FilterSection = ({
           </div>
           <div className="space-y-1">
             <Filters
-              title="Genre"
+              title="Genre & Style"
               activeTags={activeTags}
               handleFilterDropdowns={handleFilterDropdowns}
               handleAddToActiveTags={addToActiveTags}
-              filterArray={genres}
+              filterArray={genresAndStyles}
               isToggleActive={toggleGenres}
             />
             <Filters
@@ -121,7 +104,7 @@ const FilterSection = ({
               activeTags={activeTags}
               handleFilterDropdowns={handleFilterDropdowns}
               handleAddToActiveTags={addToActiveTags}
-              filterArray={decade}
+              filterArray={decades}
               isToggleActive={toggleDecades}
             />
           </div>
