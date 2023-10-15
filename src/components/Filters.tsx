@@ -30,7 +30,7 @@ const Filters = ({
         />
       </button>
       {isToggleActive && (
-        <ul className="animate-[fadeIn_400ms]">
+        <ul className="max-h-72 animate-[fadeIn_400ms] overflow-y-auto">
           {filterArray.map((filter) => (
             <li key={filter}>
               <button
