@@ -4,6 +4,7 @@ import Filters from "./Filters";
 import { Dispatch } from "react";
 import { genresAndStyles } from "../shared/genres_and_styles";
 import { decades } from "../shared/decades";
+import { getPlaylist } from "../api/api_service";
 
 interface ChildPropsFilterSection {
   isOpenModal: boolean;
@@ -21,6 +22,7 @@ const FilterSection = ({
 
   const createPlaylist = async () => {
     setIsPlaylistFecthLoading(true);
+    const playlistResponse = await getPlaylist(activeTags);
     // here goes logic to create playlist
     // send tags to server == > set some kind of loading to 'create' button
     // when playlist comes from server, open modal and show playlist to user
