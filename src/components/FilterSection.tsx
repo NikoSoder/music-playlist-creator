@@ -21,24 +21,13 @@ const FilterSection = ({
 
   const createPlaylist = async () => {
     setIsPlaylistFecthLoading(true);
-    console.log(activeTags);
     // here goes logic to create playlist
     // send tags to server == > set some kind of loading to 'create' button
     // when playlist comes from server, open modal and show playlist to user
-    const result = await mockPromise(activeTags);
     // pass playlist to modal
     setIsOpenModal(!isOpenModal);
     setIsPlaylistFecthLoading(false);
   };
-
-  // todo: delete function this later
-  function mockPromise(value: string[]): Promise<string[]> {
-    return new Promise((resolve) => {
-      setTimeout(() => {
-        resolve(value);
-      }, 3000);
-    });
-  }
 
   const addToActiveTags = (filter: string) => {
     if (!activeTags.includes(filter) && activeTags.length < 6) {
