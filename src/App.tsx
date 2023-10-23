@@ -6,6 +6,7 @@ import { useState } from "react";
 
 function App() {
   const [isOpenModal, setIsOpenModal] = useState(false); // set this to true when playlist is created
+  const [isPlaylistFetchLoading, setIsPlaylistFecthLoading] = useState(false);
 
   const closeModal = () => {
     setIsOpenModal(false);
@@ -16,6 +17,8 @@ function App() {
       <Header />
       <FilterSection
         setIsOpenModal={setIsOpenModal}
+        setIsPlaylistFetchLoading={setIsPlaylistFecthLoading}
+        isPlaylistFetchLoading={isPlaylistFetchLoading}
         isOpenModal={isOpenModal}
       />
       {isOpenModal && <Modal handleCloseModal={closeModal} />}

@@ -9,26 +9,29 @@ import { getPlaylist } from "../api/api_service";
 interface ChildPropsFilterSection {
   isOpenModal: boolean;
   setIsOpenModal: Dispatch<React.SetStateAction<boolean>>;
+  setIsPlaylistFetchLoading: Dispatch<React.SetStateAction<boolean>>;
+  isPlaylistFetchLoading: boolean;
 }
 
 const FilterSection = ({
   isOpenModal,
   setIsOpenModal,
+  setIsPlaylistFetchLoading,
+  isPlaylistFetchLoading,
 }: ChildPropsFilterSection) => {
   const [activeTags, setActiveTags] = useState<string[]>([]);
   const [toggleGenres, setToggleGenres] = useState(false);
   const [toggleDecades, setToggleDecades] = useState(false);
-  const [isPlaylistFetchLoading, setIsPlaylistFecthLoading] = useState(false);
 
   const createPlaylist = async () => {
-    setIsPlaylistFecthLoading(true);
+    setIsPlaylistFetchLoading(true);
     const playlistResponse = await getPlaylist(activeTags);
     // here goes logic to create playlist
     // send tags to server == > set some kind of loading to 'create' button
     // when playlist comes from server, open modal and show playlist to user
     // pass playlist to modal
+    setIsPlaylistFetchLoading(false);
     setIsOpenModal(!isOpenModal);
-    setIsPlaylistFecthLoading(false);
   };
 
   const addToActiveTags = (filter: string) => {
