@@ -5,10 +5,15 @@ const BASEURL = import.meta.env.VITE_API_URL;
 // todo: change any from Promise<any[]>
 export const getPlaylist = async (activeTags: string[]): Promise<any[]> => {
   const tagsByCategories = splitTagsToOwnCategories(activeTags);
-  const response = activeTags.length
-    ? await fetch(`${BASEURL}?tags=${activeTags.join(",")}`)
-    : await fetch(BASEURL);
+  const response = await fetch(BASEURL, {
+    method: "POST",
+    body: JSON.stringify(tagsByCategories),
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
 
   const playlist = await response.json();
+  console.log(playlist);
   return playlist.rows;
 };

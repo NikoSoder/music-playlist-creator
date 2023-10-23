@@ -1,8 +1,13 @@
 import { decades } from "./decades";
 import { genresAndStyles } from "./genres_and_styles";
 
+type ISplittedTags = { genres: string[]; decades: string[] };
+
 export const splitTagsToOwnCategories = (tags: string[]) => {
-  const splittedTags = new Map<string, string[]>();
+  const splittedTags: ISplittedTags = {
+    genres: [],
+    decades: [],
+  };
   // return early if no tags selected
   if (!tags.length) return splittedTags;
 
@@ -10,21 +15,12 @@ export const splitTagsToOwnCategories = (tags: string[]) => {
     // determine if the tag is a decade or a genre
     const isDecade = decades.includes(tag);
     const isGenre = genresAndStyles.includes(tag);
-
     if (isDecade) {
-      // if it's a decade, add it to the "Decades" category in the map
-      if (!splittedTags.has("Decades")) {
-        splittedTags.set("Decades", []);
-      }
-      // remove 's' letter from the tag before pushing it
+      // remove 's' letter from the decade tag before pushing it
       const cleanedDecade = tag.replace("s", "");
-      splittedTags.get("Decades")?.push(cleanedDecade);
+      splittedTags.decades.push(cleanedDecade);
     } else if (isGenre) {
-      // if it's a genre, add it to the "Genres" category in the map
-      if (!splittedTags.has("Genres")) {
-        splittedTags.set("Genres", []);
-      }
-      splittedTags.get("Genres")?.push(tag);
+      splittedTags.genres.push(tag);
     }
   }
   return splittedTags;
