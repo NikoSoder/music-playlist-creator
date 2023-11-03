@@ -26,6 +26,13 @@ export default {
           "0%": { transform: "scale(0.3)" },
           "100%": { transform: "scale(1)" },
         },
+        error: {
+          "0%": {
+            opacity: "0",
+            transform: "translateX(90px)",
+          },
+          "100%": { opacity: "1" },
+        },
       },
       animation: {
         appear:
@@ -33,6 +40,7 @@ export default {
         fadeIn: "fadeIn 1s 1s backwards",
         below: "below 1s cubic-bezier(.58, -0.06 ,.3, 1.5)",
         scaleIn: "scaleIn 300ms",
+        error: "error 600ms cubic-bezier(.58, -0.06 ,.3, 1.5)",
       },
     },
   },
