@@ -5,12 +5,16 @@ import { Dispatch } from "react";
 import { genresAndStyles } from "../shared/genres_and_styles";
 import { decades } from "../shared/decades";
 import { getPlaylist } from "../api/api_service";
+import { APIResult } from "../types/response";
+import { Song } from "../types/response";
 
 interface ChildPropsFilterSection {
   isOpenModal: boolean;
   setIsOpenModal: Dispatch<React.SetStateAction<boolean>>;
   setIsPlaylistFetchLoading: Dispatch<React.SetStateAction<boolean>>;
   isPlaylistFetchLoading: boolean;
+  setUserPlaylist: Dispatch<React.SetStateAction<Song[]>>;
+  setAPIResponseMessage: Dispatch<React.SetStateAction<string>>;
 }
 
 const FilterSection = ({
@@ -18,18 +22,25 @@ const FilterSection = ({
   setIsOpenModal,
   setIsPlaylistFetchLoading,
   isPlaylistFetchLoading,
+  setUserPlaylist,
+  setAPIResponseMessage,
 }: ChildPropsFilterSection) => {
   const [activeTags, setActiveTags] = useState<string[]>([]);
   const [toggleGenres, setToggleGenres] = useState(false);
   const [toggleDecades, setToggleDecades] = useState(false);
 
   const createPlaylist = async () => {
+    // todo: clear response message and playlist
+    // todo: fix error message disappears if already there
     setIsPlaylistFetchLoading(true);
-    const playlistResponse = await getPlaylist(activeTags);
-    // here goes logic to create playlist
-    // send tags to server == > set some kind of loading to 'create' button
-    // when playlist comes from server, open modal and show playlist to user
-    // pass playlist to modal
+    const playlistResponse: APIResult = await getPlaylist(activeTags);
+    console.log(playlistResponse);
+    if (playlistResponse.message === "Success") {
+      setUserPlaylist(playlistResponse.rows);
+      setAPIResponseMessage(playlistResponse.message);
+    } else {
+      setAPIResponseMessage(playlistResponse.message);
+    }
     setIsPlaylistFetchLoading(false);
     setIsOpenModal(!isOpenModal);
   };

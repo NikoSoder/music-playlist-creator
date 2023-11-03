@@ -1,12 +1,27 @@
 import { CheckIcon } from "@heroicons/react/24/outline";
 import { fakeArtistData } from "../mockdata/mockArtists";
 import { XMarkIcon } from "@heroicons/react/24/outline";
+import { Song } from "../types/response";
+import ErrorMessage from "./ErrorMessage";
 
 interface ChildPropsModal {
   handleCloseModal: () => void;
+  playlist: Song[];
+  responseMessage: string;
 }
 
-const Modal = ({ handleCloseModal }: ChildPropsModal) => {
+const Modal = ({
+  handleCloseModal,
+  playlist,
+  responseMessage,
+}: ChildPropsModal) => {
+  if (responseMessage !== "Success") {
+    return (
+      <section className="fixed right-0 top-0 m-5 animate-error">
+        <ErrorMessage />
+      </section>
+    );
+  }
   return (
     <>
       {/* modal background window */}
