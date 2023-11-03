@@ -1,9 +1,8 @@
 import { splitTagsToOwnCategories } from "../shared/splitActiveTags";
-// todo: create response model
+import { APIResult } from "../types/response";
 const BASEURL = import.meta.env.VITE_API_URL;
 
-// todo: change any from Promise<any[]>
-export const getPlaylist = async (activeTags: string[]): Promise<any[]> => {
+export const getPlaylist = async (activeTags: string[]): Promise<APIResult> => {
   const tagsByCategories = splitTagsToOwnCategories(activeTags);
   const response = await fetch(BASEURL, {
     method: "POST",
@@ -14,6 +13,5 @@ export const getPlaylist = async (activeTags: string[]): Promise<any[]> => {
   });
 
   const playlist = await response.json();
-  console.log(playlist);
-  return playlist.rows;
+  return playlist;
 };
