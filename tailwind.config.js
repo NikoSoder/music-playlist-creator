@@ -33,6 +33,12 @@ export default {
           },
           "100%": { opacity: "1" },
         },
+        errorOut: {
+          "0%": {
+            opacity: "1",
+          },
+          "100%": { opacity: "0", transform: "translateX(90px)" },
+        },
       },
       animation: {
         appear:
@@ -40,7 +46,8 @@ export default {
         fadeIn: "fadeIn 1s 1s backwards",
         below: "below 1s cubic-bezier(.58, -0.06 ,.3, 1.5)",
         scaleIn: "scaleIn 300ms",
-        error: "error 600ms cubic-bezier(.58, -0.06 ,.3, 1.5)",
+        error:
+          "error 600ms cubic-bezier(.58, -0.06 ,.3, 1.5),errorOut 1200ms 2s forwards cubic-bezier(.68,-0.53,.78,.97)",
       },
     },
   },

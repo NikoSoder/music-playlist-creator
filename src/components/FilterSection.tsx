@@ -30,8 +30,7 @@ const FilterSection = ({
   const [toggleDecades, setToggleDecades] = useState(false);
 
   const createPlaylist = async () => {
-    // todo: clear response message and playlist
-    // todo: fix error message disappears if already there
+    setIsOpenModal(false);
     setIsPlaylistFetchLoading(true);
     const playlistResponse: APIResult = await getPlaylist(activeTags);
     console.log(playlistResponse);
@@ -40,9 +39,13 @@ const FilterSection = ({
       setAPIResponseMessage(playlistResponse.message);
     } else {
       setAPIResponseMessage(playlistResponse.message);
+      // close error message after 5 seconds
+      setTimeout(() => {
+        setIsOpenModal(false);
+      }, 5000);
     }
     setIsPlaylistFetchLoading(false);
-    setIsOpenModal(!isOpenModal);
+    setIsOpenModal(true);
   };
 
   const addToActiveTags = (filter: string) => {
@@ -118,7 +121,7 @@ const FilterSection = ({
       {/* create playlist button */}
       <div className="text-center">
         <button
-          disabled={isPlaylistFetchLoading}
+          disabled={isPlaylistFetchLoading || isOpenModal}
           onClick={createPlaylist}
           className="group relative inline-flex items-center justify-center overflow-hidden rounded-md bg-gradient-to-br from-cyan-500 to-blue-500 p-0.5 text-xl font-medium text-white hover:shadow-blue group-hover:from-cyan-500 group-hover:to-blue-500"
         >
