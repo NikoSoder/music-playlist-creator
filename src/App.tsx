@@ -3,10 +3,13 @@ import Header from "./components/Header";
 import FilterSection from "./components/FilterSection";
 import Modal from "./components/Modal";
 import { useState } from "react";
+import { Song } from "./types/response";
 
 function App() {
   const [isOpenModal, setIsOpenModal] = useState(false); // set this to true when playlist is created
   const [isPlaylistFetchLoading, setIsPlaylistFecthLoading] = useState(false);
+  const [userPlaylist, setUserPlaylist] = useState<Song[]>([]);
+  const [APIResponseMessage, setAPIResponseMessage] = useState("");
 
   const closeModal = () => {
     setIsOpenModal(false);
@@ -20,8 +23,16 @@ function App() {
         setIsPlaylistFetchLoading={setIsPlaylistFecthLoading}
         isPlaylistFetchLoading={isPlaylistFetchLoading}
         isOpenModal={isOpenModal}
+        setUserPlaylist={setUserPlaylist}
+        setAPIResponseMessage={setAPIResponseMessage}
       />
-      {isOpenModal && <Modal handleCloseModal={closeModal} />}
+      {isOpenModal && (
+        <Modal
+          handleCloseModal={closeModal}
+          playlist={userPlaylist}
+          responseMessage={APIResponseMessage}
+        />
+      )}
     </main>
   );
 }

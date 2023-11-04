@@ -5,12 +5,16 @@ import { Dispatch } from "react";
 import { genresAndStyles } from "../shared/genres_and_styles";
 import { decades } from "../shared/decades";
 import { getPlaylist } from "../api/api_service";
+import { APIResult } from "../types/response";
+import { Song } from "../types/response";
 
 interface ChildPropsFilterSection {
   isOpenModal: boolean;
   setIsOpenModal: Dispatch<React.SetStateAction<boolean>>;
   setIsPlaylistFetchLoading: Dispatch<React.SetStateAction<boolean>>;
   isPlaylistFetchLoading: boolean;
+  setUserPlaylist: Dispatch<React.SetStateAction<Song[]>>;
+  setAPIResponseMessage: Dispatch<React.SetStateAction<string>>;
 }
 
 const FilterSection = ({
@@ -18,20 +22,30 @@ const FilterSection = ({
   setIsOpenModal,
   setIsPlaylistFetchLoading,
   isPlaylistFetchLoading,
+  setUserPlaylist,
+  setAPIResponseMessage,
 }: ChildPropsFilterSection) => {
   const [activeTags, setActiveTags] = useState<string[]>([]);
   const [toggleGenres, setToggleGenres] = useState(false);
   const [toggleDecades, setToggleDecades] = useState(false);
 
   const createPlaylist = async () => {
+    setIsOpenModal(false);
     setIsPlaylistFetchLoading(true);
-    const playlistResponse = await getPlaylist(activeTags);
-    // here goes logic to create playlist
-    // send tags to server == > set some kind of loading to 'create' button
-    // when playlist comes from server, open modal and show playlist to user
-    // pass playlist to modal
+    const playlistResponse: APIResult = await getPlaylist(activeTags);
+    console.log(playlistResponse);
+    if (playlistResponse.message === "Success") {
+      setUserPlaylist(playlistResponse.rows);
+      setAPIResponseMessage(playlistResponse.message);
+    } else {
+      setAPIResponseMessage(playlistResponse.message);
+      // close error message after 5 seconds
+      setTimeout(() => {
+        setIsOpenModal(false);
+      }, 5000);
+    }
     setIsPlaylistFetchLoading(false);
-    setIsOpenModal(!isOpenModal);
+    setIsOpenModal(true);
   };
 
   const addToActiveTags = (filter: string) => {
@@ -107,7 +121,7 @@ const FilterSection = ({
       {/* create playlist button */}
       <div className="text-center">
         <button
-          disabled={isPlaylistFetchLoading}
+          disabled={isPlaylistFetchLoading || isOpenModal}
           onClick={createPlaylist}
           className="group relative inline-flex items-center justify-center overflow-hidden rounded-md bg-gradient-to-br from-cyan-500 to-blue-500 p-0.5 text-xl font-medium text-white hover:shadow-blue group-hover:from-cyan-500 group-hover:to-blue-500"
         >
