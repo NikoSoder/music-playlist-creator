@@ -30,13 +30,11 @@ const Modal = ({
           onClick={handleCloseModal}
           className="fixed left-0 top-0 h-full w-full bg-zinc-900/90 p-2"
         ></section>
-        <div className="fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
-          <section className="flex animate-below flex-col items-center gap-2 rounded-md border-2 border-blue-800 bg-slate-800 px-4 py-6 text-sm text-blue-300 md:flex-row md:text-lg">
-            <ExclamationCircleIcon className="h-6 w-6" />
-            <div>
-              <span className="font-medium">No matching results.</span> Try
-              again with different tags
-            </div>
+        <div className="fixed left-1/2 top-1/2 w-4/5 max-w-sm -translate-x-1/2 -translate-y-1/2">
+          <section className="flex animate-below flex-col items-center rounded-md border-2 border-blue-800 bg-slate-800 py-6 text-sm text-blue-300 md:text-lg">
+            <ExclamationCircleIcon className="mb-2 h-6 w-6" />
+            <p className="font-medium">No matching results</p>
+            <p>Try again with different tags</p>
           </section>
         </div>
       </>
