@@ -3,6 +3,7 @@ import { fakeArtistData } from "../mockdata/mockArtists";
 import { XMarkIcon } from "@heroicons/react/24/outline";
 import { Song } from "../types/response";
 import ErrorMessage from "./ErrorMessage";
+import { ExclamationCircleIcon } from "@heroicons/react/24/solid";
 
 interface ChildPropsModal {
   handleCloseModal: () => void;
@@ -20,6 +21,25 @@ const Modal = ({
       <section className="fixed right-0 top-0 m-5 animate-error">
         <ErrorMessage />
       </section>
+    );
+  }
+  if (responseMessage === "Success" && !playlist.length) {
+    return (
+      <>
+        <section
+          onClick={handleCloseModal}
+          className="fixed left-0 top-0 h-full w-full bg-zinc-900/90 p-2"
+        ></section>
+        <div className="fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
+          <section className="flex animate-below flex-col items-center gap-2 rounded-md border-2 border-blue-800 bg-slate-800 px-4 py-6 text-sm text-blue-300 md:flex-row md:text-lg">
+            <ExclamationCircleIcon className="h-6 w-6" />
+            <div>
+              <span className="font-medium">No matching results.</span> Try
+              again with different tags
+            </div>
+          </section>
+        </div>
+      </>
     );
   }
   return (
