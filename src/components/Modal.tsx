@@ -50,8 +50,8 @@ const Modal = ({
       ></section>
       {/* close modal when clicking outside of it or don't close */}
       {/* backdrop-blur-sm lagging ^ */}
-      <div className="fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
-        <section className="max-h-[80vh] animate-below overflow-auto rounded-md border border-blue-300 bg-slate-800/80 px-10 py-6 shadow-blue">
+      <div className="fixed left-1/2 top-1/2 w-11/12 max-w-xl -translate-x-1/2 -translate-y-1/2">
+        <section className="max-h-[80vh] animate-below overflow-auto rounded-md border border-blue-300 bg-slate-800/80 px-2 py-6 shadow-blue">
           {/* modal header */}
           <div className="relative mb-4 flex flex-col items-center justify-center gap-2">
             <div className="animate-appear rounded-full border-2 border-blue-300 p-1 shadow-blue">
@@ -60,42 +60,42 @@ const Modal = ({
             <h2 className="animate-fadeIn text-xl">Playlist created!</h2>
             <button
               onClick={handleCloseModal}
-              className="absolute right-0 top-0 animate-fadeIn rounded-md hover:bg-slate-700"
+              className="absolute right-4 top-0 animate-fadeIn rounded-md hover:bg-slate-700"
             >
               <XMarkIcon className="h-6 w-6 text-slate-300 hover:text-white" />
             </button>
           </div>
           {/* modal body */}
-          <div className="flex animate-fadeIn justify-center">
+          <div className="flex max-w-xl animate-fadeIn justify-center">
             <table className="border-separate border-spacing-4">
               <thead>
-                <tr>
-                  <th className="text-start">Artist</th>
-                  <th className="text-start">Song</th>
-                  <th className="text-start">Year</th>
-                  <th className="text-start">Duration</th>
+                <tr className="block rounded-md bg-slate-800">
+                  <th>Artist</th>
+                  <th>Song</th>
+                  <th>Year</th>
+                  <th>Duration</th>
                 </tr>
               </thead>
               <tbody>
                 {playlist.map((song) => (
                   // todo change key to unique song id
                   <Fragment key={Math.random() * 10000}>
-                    <tr>
-                      <td>{song.artist_name}</td>
-                      <td>{song.song_name}</td>
-                      <td>{song.release_year}</td>
-                      <td>{song.duration}</td>
-                    </tr>
-                    <tr>
-                      <td colSpan={4}>
-                        {song.genre_names.map((genre) => (
-                          <span
-                            key={genre}
-                            className="me-3 rounded-full bg-blue-800 px-3 py-1 text-sm"
-                          >
-                            {genre}
-                          </span>
-                        ))}
+                    <tr className="mb-4 block rounded-md bg-slate-800 p-2">
+                      <td className="block w-full p-2">{song.artist_name}</td>
+                      <td className="block w-full p-2">{song.song_name}</td>
+                      <td className="block w-full p-2">{song.release_year}</td>
+                      <td className="block w-full p-2">{song.duration}</td>
+                      <td className="block w-full p-2">
+                        <div className="flex flex-wrap">
+                          {song.genre_names.map((genre) => (
+                            <span
+                              key={genre}
+                              className="mb-2 me-2 rounded-full bg-blue-800 px-3 py-1 text-sm"
+                            >
+                              {genre}
+                            </span>
+                          ))}
+                        </div>
                       </td>
                     </tr>
                   </Fragment>
