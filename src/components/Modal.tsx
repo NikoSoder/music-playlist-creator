@@ -4,6 +4,7 @@ import { XMarkIcon } from "@heroicons/react/24/outline";
 import { Song } from "../types/response";
 import ErrorMessage from "./ErrorMessage";
 import { ExclamationCircleIcon } from "@heroicons/react/24/solid";
+import { Fragment } from "react";
 
 interface ChildPropsModal {
   handleCloseModal: () => void;
@@ -50,7 +51,7 @@ const Modal = ({
       {/* close modal when clicking outside of it or don't close */}
       {/* backdrop-blur-sm lagging ^ */}
       <div className="fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
-        <section className="max-w-lg animate-below rounded-md border border-blue-300 bg-slate-800/80 px-10 py-6 shadow-blue">
+        <section className="max-h-[80vh] animate-below overflow-auto rounded-md border border-blue-300 bg-slate-800/80 px-10 py-6 shadow-blue">
           {/* modal header */}
           <div className="relative mb-4 flex flex-col items-center justify-center gap-2">
             <div className="animate-appear rounded-full border-2 border-blue-300 p-1 shadow-blue">
@@ -69,18 +70,35 @@ const Modal = ({
             <table className="border-separate border-spacing-4">
               <thead>
                 <tr>
-                  <th className="text-start">Song</th>
                   <th className="text-start">Artist</th>
+                  <th className="text-start">Song</th>
                   <th className="text-start">Year</th>
+                  <th className="text-start">Duration</th>
                 </tr>
               </thead>
               <tbody>
-                {fakeArtistData.map((artist) => (
-                  <tr key={artist.song}>
-                    <td>{artist.song}</td>
-                    <td>{artist.artist}</td>
-                    <td>{artist.year}</td>
-                  </tr>
+                {playlist.map((song) => (
+                  // todo change key to unique song id
+                  <Fragment key={Math.random() * 10000}>
+                    <tr>
+                      <td>{song.artist_name}</td>
+                      <td>{song.song_name}</td>
+                      <td>{song.release_year}</td>
+                      <td>{song.duration}</td>
+                    </tr>
+                    <tr>
+                      <td colSpan={4}>
+                        {song.genre_names.map((genre) => (
+                          <span
+                            key={genre}
+                            className="me-3 rounded-full bg-blue-800 px-3 py-1 text-sm"
+                          >
+                            {genre}
+                          </span>
+                        ))}
+                      </td>
+                    </tr>
+                  </Fragment>
                 ))}
               </tbody>
             </table>
