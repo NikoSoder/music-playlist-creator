@@ -82,8 +82,14 @@ const Modal = ({
                     <tr className="mb-4 block rounded-md bg-slate-800 p-2">
                       <td className="block w-full p-2">{song.artist_name}</td>
                       <td className="block w-full p-2">{song.song_name}</td>
-                      <td className="block w-full p-2">{song.release_year}</td>
-                      <td className="block w-full p-2">{song.duration}</td>
+                      {song.release_year ? (
+                        <td className="block w-full p-2">
+                          {song.release_year}
+                        </td>
+                      ) : null}
+                      {song.duration ? (
+                        <td className="block w-full p-2">{song.duration}</td>
+                      ) : null}
                       <td className="block w-full p-2">
                         <div className="flex flex-wrap">
                           {song.genre_names.map((genre) => (
