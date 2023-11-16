@@ -96,6 +96,17 @@ const Modal = ({
                       {song.duration ? (
                         <td className="block w-full p-2">{song.duration}</td>
                       ) : null}
+                      {song.youtube_url ? (
+                        <td className="block w-full p-2">
+                          <iframe
+                            className="w-full"
+                            height="200"
+                            src={convertToEmbedUrl(song.youtube_url)}
+                            title={song.song_name}
+                            allowFullScreen
+                          ></iframe>
+                        </td>
+                      ) : null}
                       <td className="block w-full p-2">
                         <div className="flex flex-wrap">
                           {song.genre_names.map((genre) => (
@@ -108,17 +119,6 @@ const Modal = ({
                           ))}
                         </div>
                       </td>
-                      {song.youtube_url ? (
-                        <td className="block w-full p-2">
-                          <iframe
-                            className="w-full"
-                            height="200"
-                            src={convertToEmbedUrl(song.youtube_url)}
-                            title={song.song_name}
-                            allowFullScreen
-                          ></iframe>
-                        </td>
-                      ) : null}
                     </tr>
                   </Fragment>
                 ))}
