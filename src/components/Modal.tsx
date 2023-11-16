@@ -16,6 +16,12 @@ const Modal = ({
   playlist,
   responseMessage,
 }: ChildPropsModal) => {
+  function convertToEmbedUrl(watchUrl: string) {
+    const videoId = watchUrl.split("v=")[1];
+    const embedUrl = `https://www.youtube.com/embed/${videoId}`;
+    return embedUrl;
+  }
+
   if (responseMessage !== "Success") {
     return (
       <section className="fixed right-0 top-0 m-5 animate-error">
@@ -102,6 +108,17 @@ const Modal = ({
                           ))}
                         </div>
                       </td>
+                      {song.youtube_url ? (
+                        <td className="block w-full p-2">
+                          <iframe
+                            className="w-full"
+                            height="200"
+                            src={convertToEmbedUrl(song.youtube_url)}
+                            title={song.song_name}
+                            allowFullScreen
+                          ></iframe>
+                        </td>
+                      ) : null}
                     </tr>
                   </Fragment>
                 ))}

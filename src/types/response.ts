@@ -6,6 +6,7 @@ export interface APIResult {
 export interface Song {
   artist_name: string;
   duration: string;
+  youtube_url: string;
   genre_names: string[];
   release_id_discogs: string;
   release_year: number;
