@@ -1,9 +1,11 @@
 import { CheckIcon } from "@heroicons/react/24/outline";
 import { XMarkIcon } from "@heroicons/react/24/outline";
+import { ClipboardIcon } from "@heroicons/react/24/outline";
 import { Song } from "../types/response";
 import ErrorMessage from "./ErrorMessage";
 import { ExclamationCircleIcon } from "@heroicons/react/24/solid";
 import { Fragment } from "react";
+import { copyToClipboard } from "../shared/clipboard";
 
 interface ChildPropsModal {
   handleCloseModal: () => void;
@@ -85,7 +87,19 @@ const Modal = ({
                 {playlist.map((song) => (
                   <Fragment key={song.song_id}>
                     <tr className="mb-4 block rounded-md bg-slate-800 p-2">
-                      <td className="block w-full p-2">{song.artist_name}</td>
+                      <td className="block w-full p-2">
+                        <div className="flex justify-between">
+                          <p>{song.artist_name}</p>
+                          <button
+                            onClick={() =>
+                              copyToClipboard(song.artist_name, song.song_name)
+                            }
+                            className="rounded-md p-1 hover:bg-slate-700 active:outline active:outline-2"
+                          >
+                            <ClipboardIcon className="h-6 w-6" />
+                          </button>
+                        </div>
+                      </td>
                       <td className="block w-full p-2">{song.song_name}</td>
                       {song.release_year ? (
                         <td className="block w-full p-2">
