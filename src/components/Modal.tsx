@@ -83,8 +83,7 @@ const Modal = ({
               </thead>
               <tbody>
                 {playlist.map((song) => (
-                  // todo change key to unique song id
-                  <Fragment key={Math.random() * 10000}>
+                  <Fragment key={song.song_id}>
                     <tr className="mb-4 block rounded-md bg-slate-800 p-2">
                       <td className="block w-full p-2">{song.artist_name}</td>
                       <td className="block w-full p-2">{song.song_name}</td>

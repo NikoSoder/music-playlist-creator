@@ -4,6 +4,7 @@ export interface APIResult {
 }
 
 export interface Song {
+  song_id: number;
   artist_name: string;
   duration: string;
   youtube_url: string;
