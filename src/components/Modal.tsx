@@ -8,7 +8,7 @@ import { Fragment } from "react";
 import { copyToClipboard } from "../shared/clipboard";
 
 interface ChildPropsModal {
-  handleCloseModal: () => void;
+  handleCloseModal: (playlist: Song[]) => void;
   playlist: Song[];
   responseMessage: string;
 }
@@ -35,7 +35,7 @@ const Modal = ({
     return (
       <>
         <section
-          onClick={handleCloseModal}
+          onClick={() => handleCloseModal(playlist)}
           className="fixed left-0 top-0 h-full w-full bg-zinc-900/90 p-2"
         ></section>
         <div className="fixed left-1/2 top-1/2 w-4/5 max-w-sm -translate-x-1/2 -translate-y-1/2">
@@ -52,7 +52,7 @@ const Modal = ({
     <>
       {/* modal background window */}
       <section
-        onClick={handleCloseModal}
+        onClick={() => handleCloseModal(playlist)}
         className="fixed left-0 top-0 h-full w-full bg-zinc-900/90 p-2"
       ></section>
       {/* close modal when clicking outside of it or don't close */}
@@ -66,7 +66,7 @@ const Modal = ({
             </div>
             <h2 className="animate-fadeIn text-xl">Playlist created!</h2>
             <button
-              onClick={handleCloseModal}
+              onClick={() => handleCloseModal(playlist)}
               className="absolute right-4 top-0 animate-fadeIn rounded-md hover:bg-slate-700"
             >
               <XMarkIcon className="h-6 w-6 text-slate-300 hover:text-white" />

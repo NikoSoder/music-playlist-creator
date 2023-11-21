@@ -11,8 +11,11 @@ function App() {
   const [userPlaylist, setUserPlaylist] = useState<Song[]>([]);
   const [APIResponseMessage, setAPIResponseMessage] = useState("");
 
-  const closeModal = () => {
+  const closeModal = (playlist: Song[]) => {
     setIsOpenModal(false);
+    if (playlist.length) {
+      oldPlaylists.addPlaylistToLocalStorage(playlist);
+    }
   };
 
   return (
