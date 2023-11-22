@@ -8,6 +8,20 @@ interface ChildPropsPreviousPlaylists {
 }
 
 const RecentPlaylists = (props: ChildPropsPreviousPlaylists) => {
+  const [expandedPlaylists, setExpandedPlaylists] = useState<number[]>([]);
+
+  const togglePlaylist = (index: number) => {
+    setExpandedPlaylists((prevExpanded) => {
+      if (prevExpanded.includes(index)) {
+        // If the playlist is already expanded, remove it from the list
+        return prevExpanded.filter((i) => i !== index);
+      } else {
+        // If the playlist is not expanded, add it to the list
+        return [...prevExpanded, index];
+      }
+    });
+  };
+
   return (
     <section className="container mx-auto">
       <button
