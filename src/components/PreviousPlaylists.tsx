@@ -1,5 +1,7 @@
 import { PreviousPlaylists } from "../types/previousplaylists";
 import { Song } from "../types/response";
+import { PlusIcon } from "@heroicons/react/24/outline";
+import { useState } from "react";
 
 interface ChildPropsPreviousPlaylists {
   previousPlaylists: PreviousPlaylists[];
@@ -23,26 +25,43 @@ const RecentPlaylists = (props: ChildPropsPreviousPlaylists) => {
   };
 
   return (
-    <section className="container mx-auto">
-      <button
-        onClick={props.clearLocalStorage}
-        className="bg-slate-50 text-black"
-      >
-        remove localstorage
-      </button>
-      <h1 className="text-2xl">Previous Playlists</h1>
-      {props.previousPlaylists.map((playlist, index) => (
-        <div className="mb-2 border" key={index}>
-          <h2>{playlist.playlistName}</h2>
-          <p>{new Date(playlist.createdAt).toLocaleDateString()}</p>
-          {playlist.songs.map((song) => (
-            <div key={song.song_id}>
-              <p>{song.artist_name}</p>
-              <p>{song.song_name}</p>
+    <section className="container mx-auto py-20">
+      <div className="flex items-center justify-center gap-6">
+        <h1 className="text-2xl">Previous Playlists</h1>
+        <button onClick={props.clearLocalStorage} className="hover:underline">
+          Clear all
+        </button>
+      </div>
+      <section className="flex flex-col items-center justify-center">
+        {props.previousPlaylists.map((playlist, index) => (
+          <div className="w-full border md:w-[600px]" key={index}>
+            <div
+              onClick={() => togglePlaylist(index)}
+              className="cursor-pointer"
+            >
+              <div className="flex items-center justify-between">
+                <h2>{playlist.playlistName}</h2>
+                <PlusIcon
+                  className={`h-7 w-7 transition-all ${
+                    expandedPlaylists.includes(index) && "rotate-45"
+                  }`}
+                />
+              </div>
+              <p>{new Date(playlist.createdAt).toLocaleDateString()}</p>
             </div>
-          ))}
-        </div>
-      ))}
+            {expandedPlaylists.includes(index) && (
+              <>
+                {playlist.songs.map((song) => (
+                  <div key={song.song_id}>
+                    <p>{song.artist_name}</p>
+                    <p>{song.song_name}</p>
+                  </div>
+                ))}
+              </>
+            )}
+          </div>
+        ))}
+      </section>
     </section>
   );
 };
