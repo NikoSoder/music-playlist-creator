@@ -22,13 +22,13 @@ const RecentPlaylists = (props: ChildPropsPreviousPlaylists) => {
 
   return (
     <section className="container mx-auto py-20">
-      <div className="flex items-center justify-center gap-6">
+      <div className="mb-8 flex items-center justify-center gap-6">
         <h1 className="text-2xl">Previous Playlists</h1>
         <button onClick={props.clearLocalStorage} className="hover:underline">
           Clear all
         </button>
       </div>
-      <section className="flex flex-col items-center justify-center">
+      <section className="flex flex-col items-center justify-center gap-4">
         {props.previousPlaylists.map((playlist, index) => (
           <div className="w-full border md:w-[600px]" key={index}>
             <div
@@ -45,16 +45,18 @@ const RecentPlaylists = (props: ChildPropsPreviousPlaylists) => {
               </div>
               <p>{new Date(playlist.createdAt).toLocaleDateString()}</p>
             </div>
-            {expandedPlaylists === index && (
-              <>
-                {playlist.songs.map((song) => (
-                  <div key={song.song_id}>
-                    <p>{song.artist_name}</p>
-                    <p>{song.song_name}</p>
-                  </div>
-                ))}
-              </>
-            )}
+            <div
+              className={`${
+                expandedPlaylists === index ? "max-h-[900px]" : "max-h-0"
+              } overflow-hidden transition-all duration-500 ease-in-out`}
+            >
+              {playlist.songs.map((song) => (
+                <div key={song.song_id}>
+                  <p>{song.artist_name}</p>
+                  <p>{song.song_name}</p>
+                </div>
+              ))}
+            </div>
           </div>
         ))}
       </section>
