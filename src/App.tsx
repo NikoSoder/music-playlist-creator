@@ -4,15 +4,21 @@ import FilterSection from "./components/FilterSection";
 import Modal from "./components/Modal";
 import { useState } from "react";
 import { Song } from "./types/response";
+import { useLocalStorage } from "./hooks/useLocalStorage";
+import RecentPlaylists from "./components/PreviousPlaylists";
 
 function App() {
   const [isOpenModal, setIsOpenModal] = useState(false); // set this to true when playlist is created
   const [isPlaylistFetchLoading, setIsPlaylistFecthLoading] = useState(false);
   const [userPlaylist, setUserPlaylist] = useState<Song[]>([]);
   const [APIResponseMessage, setAPIResponseMessage] = useState("");
+  const oldPlaylists = useLocalStorage();
 
-  const closeModal = () => {
+  const closeModal = (playlist: Song[]) => {
     setIsOpenModal(false);
+    if (playlist.length) {
+      oldPlaylists.addPlaylistToLocalStorage(playlist);
+    }
   };
 
   return (
@@ -32,6 +38,10 @@ function App() {
           playlist={userPlaylist}
           responseMessage={APIResponseMessage}
         />
+      )}
+      {/* older playlists */}
+      {oldPlaylists.previousPlaylists.length !== 0 && (
+        <RecentPlaylists {...oldPlaylists} />
       )}
     </main>
   );
