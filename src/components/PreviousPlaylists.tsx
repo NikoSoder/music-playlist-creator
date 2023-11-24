@@ -30,10 +30,13 @@ const RecentPlaylists = (props: ChildPropsPreviousPlaylists) => {
       </div>
       <section className="flex flex-col items-center justify-center gap-4">
         {props.previousPlaylists.map((playlist, index) => (
-          <div className="w-full border md:w-[600px]" key={index}>
+          <div
+            className="w-full rounded-md border-2 border-zinc-500 p-6 md:w-[600px]"
+            key={index}
+          >
             <div
               onClick={() => togglePlaylist(index)}
-              className="cursor-pointer"
+              className="cursor-pointer border-b border-zinc-700 pb-2 text-xl"
             >
               <div className="flex items-center justify-between">
                 <h2>{playlist.playlistName}</h2>
@@ -48,7 +51,7 @@ const RecentPlaylists = (props: ChildPropsPreviousPlaylists) => {
             <div
               className={`${
                 expandedPlaylists === index ? "max-h-[900px]" : "max-h-0"
-              } overflow-hidden transition-all duration-500 ease-in-out`}
+              } flex flex-col gap-4 overflow-hidden pt-2 transition-all duration-500 ease-in-out`}
             >
               {playlist.songs.map((song) => (
                 <div key={song.song_id}>
