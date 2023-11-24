@@ -10,18 +10,14 @@ interface ChildPropsPreviousPlaylists {
 }
 
 const RecentPlaylists = (props: ChildPropsPreviousPlaylists) => {
-  const [expandedPlaylists, setExpandedPlaylists] = useState<number[]>([]);
+  const [expandedPlaylists, setExpandedPlaylists] = useState<number>();
 
   const togglePlaylist = (index: number) => {
-    setExpandedPlaylists((prevExpanded) => {
-      if (prevExpanded.includes(index)) {
-        // If the playlist is already expanded, remove it from the list
-        return prevExpanded.filter((i) => i !== index);
-      } else {
-        // If the playlist is not expanded, add it to the list
-        return [...prevExpanded, index];
-      }
-    });
+    if (index === expandedPlaylists) {
+      setExpandedPlaylists(undefined);
+    } else {
+      setExpandedPlaylists(index);
+    }
   };
 
   return (
@@ -43,13 +39,13 @@ const RecentPlaylists = (props: ChildPropsPreviousPlaylists) => {
                 <h2>{playlist.playlistName}</h2>
                 <PlusIcon
                   className={`h-7 w-7 transition-all ${
-                    expandedPlaylists.includes(index) && "rotate-45"
+                    expandedPlaylists === index && "rotate-45"
                   }`}
                 />
               </div>
               <p>{new Date(playlist.createdAt).toLocaleDateString()}</p>
             </div>
-            {expandedPlaylists.includes(index) && (
+            {expandedPlaylists === index && (
               <>
                 {playlist.songs.map((song) => (
                   <div key={song.song_id}>
