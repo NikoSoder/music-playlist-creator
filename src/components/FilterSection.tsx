@@ -1,12 +1,12 @@
 import { useState } from "react";
 import Tags from "./Tags";
-import Filters from "./Filters";
 import { Dispatch } from "react";
-import { genresAndStyles } from "../shared/genres_and_styles";
-import { decades } from "../shared/decades";
 import { getPlaylist } from "../api/api_service";
 import { APIResult } from "../types/response";
 import { Song } from "../types/response";
+import { filters } from "../shared/filters";
+import { ChevronDownIcon } from "@heroicons/react/24/outline";
+import { CheckIcon } from "@heroicons/react/24/outline";
 
 interface ChildPropsFilterSection {
   isOpenModal: boolean;
@@ -26,8 +26,15 @@ const FilterSection = ({
   setAPIResponseMessage,
 }: ChildPropsFilterSection) => {
   const [activeTags, setActiveTags] = useState<string[]>([]);
-  const [toggleGenres, setToggleGenres] = useState(false);
-  const [toggleDecades, setToggleDecades] = useState(false);
+  const [expandedFilter, setExpandeFilter] = useState<number>();
+
+  const togglePlaylist = (index: number) => {
+    if (index === expandedFilter) {
+      setExpandeFilter(undefined);
+    } else {
+      setExpandeFilter(index);
+    }
+  };
 
   const createPlaylist = async () => {
     setIsOpenModal(false);
@@ -61,24 +68,6 @@ const FilterSection = ({
     setActiveTags((state) => state.filter((item) => item !== filter));
   };
 
-  const handleFilterDropdowns = (filter: string) => {
-    // close other dropdowns when one filter is clicked
-    // todo: make this function cleaner
-    if (filter === "Genre & Style" && toggleGenres) {
-      return setToggleGenres(!toggleGenres);
-    }
-    if (filter === "Decade" && toggleDecades) {
-      return setToggleDecades(!toggleDecades);
-    }
-    if (filter === "Genre & Style") {
-      setToggleGenres(true);
-      setToggleDecades(false);
-    } else {
-      setToggleDecades(true);
-      setToggleGenres(false);
-    }
-  };
-
   return (
     <section className="container mx-auto border-b border-b-zinc-700 py-20">
       <section className="mb-16 flex flex-col items-center justify-center gap-10 md:flex-row md:items-start">
@@ -88,8 +77,8 @@ const FilterSection = ({
           handleRemoveFromActiveTags={removeFromActiveTags}
         />
         {/* choose filters */}
-        <section className="w-full max-w-sm rounded-md border border-sky-400 bg-zinc-800 p-6 shadow-blue">
-          <div className="mb-4 flex items-center justify-between text-white">
+        <section className="w-full max-w-sm rounded-md border border-sky-700 bg-zinc-900 p-6 shadow-blue">
+          <div className="mb-6 flex items-center justify-between text-white">
             <h2 className="text-lg">Filters</h2>
             <button
               className="hover:underline"
@@ -98,24 +87,52 @@ const FilterSection = ({
               Clear all
             </button>
           </div>
-          <div className="space-y-1">
-            <Filters
-              title="Genre & Style"
-              activeTags={activeTags}
-              handleFilterDropdowns={handleFilterDropdowns}
-              handleAddToActiveTags={addToActiveTags}
-              filterArray={genresAndStyles}
-              isToggleActive={toggleGenres}
-            />
-            <Filters
-              title="Decade"
-              activeTags={activeTags}
-              handleFilterDropdowns={handleFilterDropdowns}
-              handleAddToActiveTags={addToActiveTags}
-              filterArray={decades}
-              isToggleActive={toggleDecades}
-            />
-          </div>
+          <section className="flex flex-col items-center justify-center gap-4">
+            {filters.map((filtertype, index) => (
+              <div className="w-full rounded-md" key={index}>
+                <div
+                  onClick={() => togglePlaylist(index)}
+                  className="cursor-pointer border-b border-zinc-700 pb-2 text-xl"
+                >
+                  <div className="flex items-center justify-between">
+                    <h2>{filtertype.title}</h2>
+                    <ChevronDownIcon
+                      className={`h-5 w-5 transition-all ${
+                        expandedFilter === index && "rotate-180"
+                      }`}
+                    />
+                  </div>
+                </div>
+                <ul
+                  className={`${
+                    expandedFilter === index ? "max-h-96" : "max-h-0"
+                  } my-2 flex flex-col gap-2 overflow-hidden overflow-y-auto transition-all duration-500 ease-in-out`}
+                >
+                  {filtertype.filtersArr.map((filter, index) => (
+                    <li key={index}>
+                      <button
+                        className="relative"
+                        onClick={() => addToActiveTags(filter)}
+                      >
+                        <p
+                          className={`ps-6 ${
+                            activeTags.includes(filter) && "text-blue-200"
+                          }`}
+                        >
+                          {filter}
+                        </p>
+                        {activeTags.includes(filter) && (
+                          <span className="absolute inset-y-0 left-0 top-0 flex items-center">
+                            <CheckIcon className="h-5 w-5 text-blue-200" />
+                          </span>
+                        )}
+                      </button>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </section>
         </section>
       </section>
       {/* create playlist button */}
