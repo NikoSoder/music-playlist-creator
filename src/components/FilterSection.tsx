@@ -7,6 +7,7 @@ import { Song } from "../types/response";
 import { filters } from "../shared/filters";
 import { ChevronDownIcon } from "@heroicons/react/24/outline";
 import { CheckIcon } from "@heroicons/react/24/outline";
+import toast, { Toaster } from "react-hot-toast";
 
 interface ChildPropsFilterSection {
   isOpenModal: boolean;
@@ -39,20 +40,29 @@ const FilterSection = ({
   const createPlaylist = async () => {
     setIsOpenModal(false);
     setIsPlaylistFetchLoading(true);
-    const playlistResponse: APIResult = await getPlaylist(activeTags);
-    console.log(playlistResponse);
-    if (playlistResponse.message === "Success") {
-      setUserPlaylist(playlistResponse.rows);
-      setAPIResponseMessage(playlistResponse.message);
-    } else {
-      setAPIResponseMessage(playlistResponse.message);
-      // close error message after 5 seconds
-      setTimeout(() => {
-        setIsOpenModal(false);
-      }, 5000);
+    try {
+      const playlistResponse: APIResult = await getPlaylist(activeTags);
+      console.log(playlistResponse); // todo delete this later
+
+      if (
+        playlistResponse.message === "Success" &&
+        playlistResponse.rows.length
+      ) {
+        toast.success("Playlist created successfully", { duration: 4000 });
+      }
+
+      if (playlistResponse.message === "Success") {
+        setUserPlaylist(playlistResponse.rows);
+        setAPIResponseMessage(playlistResponse.message);
+        setIsOpenModal(true);
+      } else {
+        setAPIResponseMessage(playlistResponse.message);
+      }
+    } catch (e) {
+      console.error(e);
+      toast.error("Something went wrong");
     }
     setIsPlaylistFetchLoading(false);
-    setIsOpenModal(true);
   };
 
   const addToActiveTags = (filter: string) => {
@@ -70,6 +80,25 @@ const FilterSection = ({
 
   return (
     <section className="container mx-auto border-b border-b-zinc-700 py-20">
+      <Toaster
+        position="top-right"
+        toastOptions={{
+          success: {
+            style: {
+              background: "#1f2937",
+              color: "white",
+              padding: "15px",
+            },
+          },
+          error: {
+            style: {
+              background: "#1f2937",
+              color: "white",
+              padding: "15px",
+            },
+          },
+        }}
+      />
       <section className="mb-16 flex flex-col items-center justify-center gap-10 md:flex-row md:items-start">
         {/* active tags */}
         <Tags
