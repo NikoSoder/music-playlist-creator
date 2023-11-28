@@ -2,7 +2,6 @@ import { CheckIcon } from "@heroicons/react/24/outline";
 import { XMarkIcon } from "@heroicons/react/24/outline";
 import { ClipboardIcon } from "@heroicons/react/24/outline";
 import { Song } from "../types/response";
-import ErrorMessage from "./ErrorMessage";
 import { ExclamationCircleIcon } from "@heroicons/react/24/solid";
 import { Fragment } from "react";
 import { copyToClipboard } from "../shared/clipboard";
@@ -24,13 +23,6 @@ const Modal = ({
     return embedUrl;
   }
 
-  if (responseMessage !== "Success") {
-    return (
-      <section className="fixed right-0 top-0 m-5 animate-error">
-        <ErrorMessage />
-      </section>
-    );
-  }
   if (responseMessage === "Success" && !playlist.length) {
     return (
       <>
