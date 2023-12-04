@@ -1,4 +1,49 @@
+import { useEffect, useState } from "react";
 import { MusicalNoteIcon } from "@heroicons/react/24/outline";
+import useAuth from "../hooks/useAuth";
+import SpotifyWebApi from "spotify-web-api-node";
+import { PUBLIC_CLIENT_ID } from "../shared/spotify_info";
+import axios from "axios";
+import Avatar from "./Avatar";
+import SpotifyAuthLink from "./SpotifyAuthLink";
+const BASEURL = import.meta.env.VITE_API_URL;
+
+const spotifyApi = new SpotifyWebApi({
+  clientId: PUBLIC_CLIENT_ID,
+});
+
+interface ChildPropsHeader {
+  code: string | null;
+  accessDenied: string | null;
+}
+
+const Header = ({ code, accessDenied }: ChildPropsHeader) => {
+  const [userProfile, setUserProfile] = useState<{
+    name?: string;
+    image?: string;
+  }>();
+  const auth = useAuth(code, accessDenied);
+
+  useEffect(() => {
+    if (!auth.accessToken) return;
+    spotifyApi.setAccessToken(auth.accessToken);
+    // Get the authenticated user
+    spotifyApi
+      .getMe()
+      .then((data) => {
+        const image =
+          data.body.images && data.body.images.length > 0
+            ? data.body.images[0].url
+            : undefined;
+        setUserProfile({
+          name: data.body.display_name,
+          image: image,
+        });
+      })
+      .catch((err) => {
+        console.log("Something went wrong!", err);
+      });
+  }, [auth.accessToken]);
 
   return (
     <section className="container mx-auto border-b border-b-zinc-700">
