@@ -9,6 +9,7 @@ import RecentPlaylists from "./components/PreviousPlaylists";
 
 // search 'code' param
 const code = new URLSearchParams(window.location.search).get("code");
+const accessDenied = new URLSearchParams(window.location.search).get("error");
 
 function App() {
   const [isOpenModal, setIsOpenModal] = useState(false); // set this to true when playlist is created
@@ -26,7 +27,7 @@ function App() {
 
   return (
     <main className="p-4">
-      <Header code={code} />
+      <Header code={code} accessDenied={accessDenied} />
       <FilterSection
         setIsOpenModal={setIsOpenModal}
         setIsPlaylistFetchLoading={setIsPlaylistFecthLoading}
