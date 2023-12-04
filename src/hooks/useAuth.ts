@@ -12,7 +12,6 @@ export default function useAuth(
   useEffect(() => {
     const getAuth = async () => {
       if (!code) return;
-      console.log(code);
       try {
         const response = await axios.post(`${BASEURL}/login`, { code });
         setAccessToken(response.data.accessToken);
