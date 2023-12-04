@@ -42,8 +42,6 @@ const FilterSection = ({
     setIsPlaylistFetchLoading(true);
     try {
       const playlistResponse: APIResult = await getPlaylist(activeTags);
-      console.log(playlistResponse); // todo delete this later
-
       if (
         playlistResponse.message === "Success" &&
         playlistResponse.rows.length
