@@ -45,6 +45,56 @@ const Header = ({ code, accessDenied }: ChildPropsHeader) => {
       });
   }, [auth.accessToken]);
 
+  useEffect(() => {
+    const getRefreshToken = async () => {
+      const accessTokenLocalstorage = localStorage.getItem("accessToken");
+      // set access token to spotifyApi so we can call .getMe() function
+      if (accessTokenLocalstorage) {
+        spotifyApi.setAccessToken(accessTokenLocalstorage);
+      }
+
+      const refreshTokenLocalstorage = localStorage.getItem("refreshToken");
+      if (!refreshTokenLocalstorage) {
+        return;
+      }
+
+      spotifyApi
+        .getMe()
+        .then((data) => {
+          const image =
+            data.body.images && data.body.images.length > 0
+              ? data.body.images[0].url
+              : undefined;
+          setUserProfile({
+            name: data.body.display_name,
+            image: image,
+          });
+        })
+        .catch((err) => {
+          console.log("Invalid access token", err);
+          // if accesstoken old then get new access token
+          refreshToken(refreshTokenLocalstorage);
+        });
+    };
+    getRefreshToken();
+  }, []);
+
+  const refreshToken = async (refreshTokenLocalstorage: string) => {
+    try {
+      const response = await axios.post(`${BASEURL}/refresh`, {
+        refreshTokenLocalstorage,
+      });
+      auth.setAccessToken(response.data.accessToken);
+      localStorage.setItem("accessToken", response.data.accessToken);
+      spotifyApi.setAccessToken(response.data.accessToken);
+    } catch (e) {
+      // remove tokens if wrong refreshToken
+      localStorage.removeItem("accessToken");
+      localStorage.removeItem("refreshToken");
+      console.error(e);
+    }
+  };
+
   return (
     <section className="container mx-auto border-b border-b-zinc-700">
       {/* nav */}
