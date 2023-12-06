@@ -20,6 +20,15 @@ const RecentPlaylists = (props: ChildPropsPreviousPlaylists) => {
     }
   };
 
+  if (props.previousPlaylists.length === 0) {
+    return (
+      <section className="container mx-auto py-20 text-center">
+        <h1 className="mb-4 text-2xl">Previous Playlists</h1>
+        <em>No previous playlists</em>
+      </section>
+    );
+  }
+
   return (
     <section className="container mx-auto py-20">
       <div className="mb-8 flex items-center justify-center gap-6">

@@ -44,9 +44,7 @@ function App() {
         />
       )}
       {/* older playlists */}
-      {oldPlaylists.previousPlaylists.length !== 0 && (
-        <RecentPlaylists {...oldPlaylists} />
-      )}
+      <RecentPlaylists {...oldPlaylists} />
     </main>
   );
 }
