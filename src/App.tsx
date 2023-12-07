@@ -6,6 +6,7 @@ import { useState } from "react";
 import { Song } from "./types/response";
 import { useLocalStorage } from "./hooks/useLocalStorage";
 import RecentPlaylists from "./components/PreviousPlaylists";
+import { ThemeProvider } from "./components/Theme-provider";
 
 // search 'code' param
 const code = new URLSearchParams(window.location.search).get("code");
@@ -26,26 +27,28 @@ function App() {
   };
 
   return (
-    <main className="p-4">
-      <Header code={code} accessDenied={accessDenied} />
-      <FilterSection
-        setIsOpenModal={setIsOpenModal}
-        setIsPlaylistFetchLoading={setIsPlaylistFecthLoading}
-        isPlaylistFetchLoading={isPlaylistFetchLoading}
-        isOpenModal={isOpenModal}
-        setUserPlaylist={setUserPlaylist}
-        setAPIResponseMessage={setAPIResponseMessage}
-      />
-      {isOpenModal && (
-        <Modal
-          handleCloseModal={closeModal}
-          playlist={userPlaylist}
-          responseMessage={APIResponseMessage}
+    <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
+      <main className="p-4">
+        <Header code={code} accessDenied={accessDenied} />
+        <FilterSection
+          setIsOpenModal={setIsOpenModal}
+          setIsPlaylistFetchLoading={setIsPlaylistFecthLoading}
+          isPlaylistFetchLoading={isPlaylistFetchLoading}
+          isOpenModal={isOpenModal}
+          setUserPlaylist={setUserPlaylist}
+          setAPIResponseMessage={setAPIResponseMessage}
         />
-      )}
-      {/* older playlists */}
-      <RecentPlaylists {...oldPlaylists} />
-    </main>
+        {isOpenModal && (
+          <Modal
+            handleCloseModal={closeModal}
+            playlist={userPlaylist}
+            responseMessage={APIResponseMessage}
+          />
+        )}
+        {/* older playlists */}
+        <RecentPlaylists {...oldPlaylists} />
+      </main>
+    </ThemeProvider>
   );
 }
 
