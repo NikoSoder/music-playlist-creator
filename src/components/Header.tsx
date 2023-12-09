@@ -6,6 +6,7 @@ import { PUBLIC_CLIENT_ID } from "../shared/spotify_info";
 import axios from "axios";
 import Avatar from "./Avatar";
 import SpotifyAuthLink from "./SpotifyAuthLink";
+import { ModeToggle } from "./Mode-toggle";
 const BASEURL = import.meta.env.VITE_API_URL;
 
 const spotifyApi = new SpotifyWebApi({
@@ -96,15 +97,18 @@ const Header = ({ code, accessDenied }: ChildPropsHeader) => {
   };
 
   return (
-    <section className="container mx-auto border-b border-b-zinc-700">
+    <section className="container mx-auto border-b">
       {/* nav */}
-      <nav className="flex items-center justify-between gap-2 text-white">
+      <nav className="flex items-center justify-between gap-2">
         <div className="flex items-center gap-2">
           <MusicalNoteIcon className="h-6 w-6" />
           <h1 className="text-lg md:text-2xl">Playlist creator</h1>
         </div>
         {/* connect to spotify */}
-        {userProfile ? <Avatar {...userProfile} /> : <SpotifyAuthLink />}
+        <div className="flex gap-2 sm:gap-4">
+          {userProfile ? <Avatar {...userProfile} /> : <SpotifyAuthLink />}
+          <ModeToggle />
+        </div>
       </nav>
       {/* hero section */}
       <section className="py-20 text-center">
