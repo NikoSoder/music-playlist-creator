@@ -7,6 +7,7 @@ import { Song } from "./types/response";
 import { useLocalStorage } from "./hooks/useLocalStorage";
 import RecentPlaylists from "./components/PreviousPlaylists";
 import { ThemeProvider } from "./components/Theme-provider";
+import { Toaster } from "@/components/ui/toaster";
 
 // search 'code' param
 const code = new URLSearchParams(window.location.search).get("code");
@@ -47,6 +48,7 @@ function App() {
         )}
         {/* older playlists */}
         <RecentPlaylists {...oldPlaylists} />
+        <Toaster />
       </main>
     </ThemeProvider>
   );

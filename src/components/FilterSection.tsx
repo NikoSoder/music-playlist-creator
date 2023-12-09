@@ -8,6 +8,7 @@ import { filters } from "../shared/filters";
 import { ChevronDownIcon } from "@heroicons/react/24/outline";
 import { CheckIcon } from "@heroicons/react/24/outline";
 import toast, { Toaster } from "react-hot-toast";
+import { useToast } from "@/components/ui/use-toast";
 
 interface ChildPropsFilterSection {
   isOpenModal: boolean;
@@ -36,6 +37,7 @@ const FilterSection = ({
       setExpandeFilter(index);
     }
   };
+  const { toast } = useToast();
 
   const createPlaylist = async () => {
     setIsOpenModal(false);
@@ -46,7 +48,11 @@ const FilterSection = ({
         playlistResponse.message === "Success" &&
         playlistResponse.rows.length
       ) {
-        toast.success("Playlist created successfully", { duration: 4000 });
+        toast({
+          title: "Success!",
+          description: "Playlist created successfully",
+        });
+        handleAddPlaylist(playlistResponse.rows);
       }
 
       if (playlistResponse.message === "Success") {
@@ -58,12 +64,23 @@ const FilterSection = ({
       }
     } catch (e) {
       console.error(e);
-      toast.error("Something went wrong");
+      toast({
+        variant: "destructive",
+        title: "Uh oh! Something went wrong.",
+        description: "There was a problem with your request.",
+      });
     }
     setIsPlaylistFetchLoading(false);
   };
 
   const addToActiveTags = (filter: string) => {
+    if (!activeTags.includes(filter) && activeTags.length > 5) {
+      toast({
+        title: "Uh oh!",
+        description: "Can't add more than 6 filters",
+      });
+    }
+
     if (!activeTags.includes(filter) && activeTags.length < 6) {
       setActiveTags([...activeTags, filter]);
     } else {
@@ -77,26 +94,6 @@ const FilterSection = ({
   };
 
   return (
-    <section className="container mx-auto border-b border-b-zinc-700 py-20">
-      <Toaster
-        position="top-right"
-        toastOptions={{
-          success: {
-            style: {
-              background: "#1f2937",
-              color: "white",
-              padding: "15px",
-            },
-          },
-          error: {
-            style: {
-              background: "#1f2937",
-              color: "white",
-              padding: "15px",
-            },
-          },
-        }}
-      />
       <section className="mb-16 flex flex-col items-center justify-center gap-10 md:flex-row md:items-start">
         {/* active tags */}
         <Tags
