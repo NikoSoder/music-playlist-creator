@@ -1,5 +1,5 @@
-import { XMarkIcon } from "@heroicons/react/24/outline";
 import { Button } from "./ui/button";
+import { Cross1Icon } from "@radix-ui/react-icons";
 
 interface ChildPropsTags {
   activeTags: string[];
@@ -23,8 +23,8 @@ const Tags = ({
                 onClick={() => handleRemoveFromActiveTags(tag)}
               >
                 {tag}
-                <div className="ms-2 rounded-full p-1 transition-all group-hover:bg-zinc-700">
-                  <XMarkIcon className="h-4 w-4" />
+                <div className="ms-2 rounded-full p-1 transition-all group-hover:bg-gray-200 dark:group-hover:bg-zinc-700">
+                  <Cross1Icon className="h-3 w-3" />
                 </div>
               </Button>
             </li>

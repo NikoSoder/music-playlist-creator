@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { MusicalNoteIcon } from "@heroicons/react/24/outline";
+import { PlayIcon } from "@radix-ui/react-icons";
 import useAuth from "../hooks/useAuth";
 import SpotifyWebApi from "spotify-web-api-node";
 import { PUBLIC_CLIENT_ID } from "../shared/spotify_info";
@@ -101,7 +101,7 @@ const Header = ({ code, accessDenied }: ChildPropsHeader) => {
       {/* nav */}
       <nav className="flex items-center justify-between gap-2">
         <div className="flex items-center gap-2">
-          <MusicalNoteIcon className="h-6 w-6" />
+          <PlayIcon className="h-6 w-6" />
           <h1 className="text-lg md:text-2xl">Playlist creator</h1>
         </div>
         {/* connect to spotify */}

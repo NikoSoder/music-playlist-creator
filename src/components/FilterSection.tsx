@@ -5,8 +5,8 @@ import { getPlaylist } from "../api/api_service";
 import { APIResult } from "../types/response";
 import { Song } from "../types/response";
 import { filters } from "../shared/filters";
-import { CheckIcon } from "@heroicons/react/24/outline";
-import { EllipsisHorizontalCircleIcon } from "@heroicons/react/24/outline";
+import { CheckIcon } from "@radix-ui/react-icons";
+import { DotsHorizontalIcon } from "@radix-ui/react-icons";
 import { useToast } from "@/components/ui/use-toast";
 
 import { Button } from "@/components/ui/button";
@@ -125,8 +125,8 @@ const FilterSection = ({
           <p className="text-sm font-medium leading-none">Search filters</p>
           <DropdownMenu open={open} onOpenChange={setOpen}>
             <DropdownMenuTrigger asChild>
-              <Button variant="outline" size="icon">
-                <EllipsisHorizontalCircleIcon className="h-8 w-8 text-muted-foreground" />
+              <Button variant="ghost" size="sm">
+                <DotsHorizontalIcon />
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end" className="w-[200px]">
