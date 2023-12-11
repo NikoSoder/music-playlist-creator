@@ -6,6 +6,11 @@
 
 Project for creating music playlists. It uses a postgreSQL database. Music data is from discogs API.
 
+## Features
+
+- [x] Create a playlist
+- [ ] Move playlist to spotify
+
 ## Running locally
 
 Run `git clone <CLONE URL>`
@@ -23,7 +28,6 @@ _Note: No introductions for setupping backend yet._
 - React
 - TypeScript
 - Tailwind
-
-## Contributions
-
-Contributions are welcome! If you have ideas for improvements or new features, feel free to submit a pull request.
+- Shadcn/ui
+- Spotify API
+- Discogs API
