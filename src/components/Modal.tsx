@@ -2,6 +2,7 @@ import { CopyIcon, ExclamationTriangleIcon } from "@radix-ui/react-icons";
 import { Dispatch } from "react";
 import { Song } from "@/types/response";
 import { copyToClipboard } from "@/shared/clipboard";
+import { useToast } from "./ui/use-toast";
 import {
   Card,
   CardContent,
@@ -35,6 +36,7 @@ export function Modal({
   playlist,
   responseMessage,
 }: ChildPropsModal) {
+  const { toast } = useToast();
   function convertToEmbedUrl(watchUrl: string) {
     const videoId = watchUrl.split("v=")[1];
     const embedUrl = `https://www.youtube.com/embed/${videoId}`;
@@ -75,9 +77,12 @@ export function Modal({
                   </div>
                   <div>
                     <Button
-                      onClick={() =>
-                        copyToClipboard(song.artist_name, song.song_name)
-                      }
+                      onClick={() => {
+                        copyToClipboard(song.artist_name, song.song_name);
+                        toast({
+                          description: "Copied to clipboard",
+                        });
+                      }}
                       size="sm"
                       className="px-3"
                     >
