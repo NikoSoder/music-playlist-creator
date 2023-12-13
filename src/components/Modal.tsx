@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 import { CopyIcon, ExclamationTriangleIcon } from "@radix-ui/react-icons";
 import { Dispatch } from "react";
 import { Song } from "@/types/response";
@@ -36,7 +37,16 @@ export function Modal({
   playlist,
   responseMessage,
 }: ChildPropsModal) {
+  const [showAllGenresCard, setShowAllGenresCard] = useState<number[]>([]);
   const { toast } = useToast();
+
+  useEffect(() => {
+    // Reset showAllGenresCard when the modal is closed
+    if (!open) {
+      setShowAllGenresCard([]);
+    }
+  }, [open]);
+
   function convertToEmbedUrl(watchUrl: string) {
     const videoId = watchUrl.split("v=")[1];
     const embedUrl = `https://www.youtube.com/embed/${videoId}`;
@@ -65,7 +75,7 @@ export function Modal({
             </DialogDescription> */}
           </DialogHeader>
           <div className="flex flex-col gap-7">
-            {playlist.map((song) => (
+            {playlist.map((song, index) => (
               <Card
                 className="border bg-slate-50 shadow-md dark:border dark:border-blue-900 dark:bg-zinc-900/50 dark:shadow-blue"
                 key={song.song_id}
@@ -96,14 +106,36 @@ export function Modal({
                   {song.release_year ? <p>{song.release_year}</p> : null}
                   {song.duration ? <p>{song.duration}</p> : null}
                   <div className="flex flex-wrap">
-                    {song.genre_names.map((genre, index) => (
-                      <span
-                        key={index}
-                        className="mb-2 me-2 rounded-full bg-sky-800 px-3 py-1 text-sm text-white dark:bg-blue-800"
-                      >
-                        {genre}
-                      </span>
-                    ))}
+                    {showAllGenresCard.includes(index)
+                      ? song.genre_names.map((genre, index) => (
+                          <span
+                            key={index}
+                            className="mb-2 me-2 rounded-full bg-sky-800 px-3 py-1 text-sm text-white dark:bg-blue-800"
+                          >
+                            {genre}
+                          </span>
+                        ))
+                      : song.genre_names.slice(0, 4).map((genre, index) => (
+                          <span
+                            key={index}
+                            className="mb-2 me-2 rounded-full bg-sky-800 px-3 py-1 text-sm text-white dark:bg-blue-800"
+                          >
+                            {genre}
+                          </span>
+                        ))}
+                    {song.genre_names.length > 4 &&
+                      !showAllGenresCard.includes(index) && (
+                        <Button
+                          className="rounded-full"
+                          variant={"default"}
+                          size={"sm"}
+                          onClick={() =>
+                            setShowAllGenresCard([...showAllGenresCard, index])
+                          }
+                        >
+                          +{song.genre_names.length - 4} more
+                        </Button>
+                      )}
                   </div>
                 </CardContent>
                 {/* <CardFooter>
