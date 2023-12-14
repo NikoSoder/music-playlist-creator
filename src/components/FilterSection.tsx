@@ -63,6 +63,7 @@ const FilterSection = ({
         playlistResponse.rows.length
       ) {
         toast({
+          variant: "success",
           title: "Success!",
           description: "Playlist created successfully",
         });
