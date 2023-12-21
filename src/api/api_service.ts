@@ -4,7 +4,7 @@ const BASEURL = import.meta.env.VITE_API_URL;
 
 export const getPlaylist = async (activeTags: string[]): Promise<APIResult> => {
   const tagsByCategories = splitTagsToOwnCategories(activeTags);
-  const response = await fetch(BASEURL, {
+  const response = await fetch(`${BASEURL}/playlist`, {
     method: "POST",
     body: JSON.stringify(tagsByCategories),
     headers: {
