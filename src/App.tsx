@@ -9,10 +9,6 @@ import { ThemeProvider } from "./components/Theme-provider";
 import { Toaster } from "@/components/ui/toaster";
 import { Modal } from "./components/Modal";
 
-// search 'code' param
-const code = new URLSearchParams(window.location.search).get("code");
-const accessDenied = new URLSearchParams(window.location.search).get("error");
-
 function App() {
   const [isOpenModal, setIsOpenModal] = useState(false);
   const [isPlaylistFetchLoading, setIsPlaylistFecthLoading] = useState(false);
@@ -27,7 +23,7 @@ function App() {
   return (
     <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
       <main className="p-4">
-        <Header code={code} accessDenied={accessDenied} />
+        <Header />
         <FilterSection
           setIsOpenModal={setIsOpenModal}
           setIsPlaylistFetchLoading={setIsPlaylistFecthLoading}
